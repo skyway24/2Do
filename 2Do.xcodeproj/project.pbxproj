@@ -16,6 +16,12 @@
 		97493F2E265A988F00FA924F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97493F2D265A988F00FA924F /* Preview Assets.xcassets */; };
 		97493F31265A988F00FA924F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97493F2F265A988F00FA924F /* LaunchScreen.storyboard */; };
 		97493F3A265A98D800FA924F /* AddToDoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97493F39265A98D800FA924F /* AddToDoView.swift */; };
+		97B53BA026601050004FA391 /* FormRowLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B53B9F26601050004FA391 /* FormRowLinkView.swift */; };
+		97B53BA226601072004FA391 /* FormRowStaticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B53BA126601072004FA391 /* FormRowStaticView.swift */; };
+		97B53BA426601082004FA391 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B53BA326601082004FA391 /* SettingsView.swift */; };
+		97B53BBA266017C4004FA391 /* ThemeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B53BB9266017C4004FA391 /* ThemeModel.swift */; };
+		97B53BBC26601812004FA391 /* ThemeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B53BBB26601812004FA391 /* ThemeData.swift */; };
+		97B53BBE26601881004FA391 /* ThemeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B53BBD26601881004FA391 /* ThemeSettings.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +36,12 @@
 		97493F30265A988F00FA924F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97493F32265A988F00FA924F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		97493F39265A98D800FA924F /* AddToDoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToDoView.swift; sourceTree = "<group>"; };
+		97B53B9F26601050004FA391 /* FormRowLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRowLinkView.swift; sourceTree = "<group>"; };
+		97B53BA126601072004FA391 /* FormRowStaticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormRowStaticView.swift; sourceTree = "<group>"; };
+		97B53BA326601082004FA391 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		97B53BB9266017C4004FA391 /* ThemeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeModel.swift; sourceTree = "<group>"; };
+		97B53BBB26601812004FA391 /* ThemeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeData.swift; sourceTree = "<group>"; };
+		97B53BBD26601881004FA391 /* ThemeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +74,7 @@
 		97493F20265A988E00FA924F /* 2Do */ = {
 			isa = PBXGroup;
 			children = (
+				97B53BB8266017A5004FA391 /* Theme */,
 				97493F21265A988E00FA924F /* AppDelegate.swift */,
 				97493F23265A988E00FA924F /* SceneDelegate.swift */,
 				97493F38265A98B600FA924F /* View */,
@@ -88,8 +101,21 @@
 				97493F25265A988E00FA924F /* ContentView.swift */,
 				97493F39265A98D800FA924F /* AddToDoView.swift */,
 				97118A39265E68C600B776C6 /* EmptyListView.swift */,
+				97B53B9F26601050004FA391 /* FormRowLinkView.swift */,
+				97B53BA126601072004FA391 /* FormRowStaticView.swift */,
+				97B53BA326601082004FA391 /* SettingsView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		97B53BB8266017A5004FA391 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				97B53BB9266017C4004FA391 /* ThemeModel.swift */,
+				97B53BBB26601812004FA391 /* ThemeData.swift */,
+				97B53BBD26601881004FA391 /* ThemeSettings.swift */,
+			);
+			path = Theme;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,11 +189,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				97493F22265A988E00FA924F /* AppDelegate.swift in Sources */,
+				97B53BA226601072004FA391 /* FormRowStaticView.swift in Sources */,
 				97493F3A265A98D800FA924F /* AddToDoView.swift in Sources */,
+				97B53BBC26601812004FA391 /* ThemeData.swift in Sources */,
+				97B53BA426601082004FA391 /* SettingsView.swift in Sources */,
 				97118A3A265E68C600B776C6 /* EmptyListView.swift in Sources */,
+				97B53BBE26601881004FA391 /* ThemeSettings.swift in Sources */,
 				97493F24265A988E00FA924F /* SceneDelegate.swift in Sources */,
 				97493F29265A988E00FA924F /* _Do.xcdatamodeld in Sources */,
+				97B53BBA266017C4004FA391 /* ThemeModel.swift in Sources */,
 				97493F26265A988E00FA924F /* ContentView.swift in Sources */,
+				97B53BA026601050004FA391 /* FormRowLinkView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
