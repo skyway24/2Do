@@ -15,6 +15,11 @@ struct AddToDoView: View {
     @State private var errorMessage : String = ""
     @State private var name: String = ""
     @State private var priority: String = "Normal"
+    
+    @ObservedObject var theme = ThemeSettings()
+    var themes: [Theme] = themeData
+    
+    
     let priorities = ["High", "Normal", "Low"]
     var body: some View {
         
@@ -25,8 +30,6 @@ struct AddToDoView: View {
                     TextField("ToDo", text: $name)
                         .padding().background(Color(UIColor.tertiarySystemFill))
                         .cornerRadius(9).font(.system(size: 24, weight: .bold, design: .default))
-                    
-                    
                     
                     Picker("Priority", selection: $priority){
                         ForEach(priorities, id: \.self){
@@ -53,13 +56,11 @@ struct AddToDoView: View {
                             return
                         }
                         self.presentationMode.wrappedValue.dismiss()
-                      
-                        
                         
                     }){
                         Text("Save").font(.system(size: 24, weight: .bold, design: .default))
                             .padding().frame(minWidth: 0, maxWidth: .infinity)
-                            .background(Color.blue).cornerRadius(9).foregroundColor(Color.white)
+                            .background(themes[self.theme.themeSettings].themeColor).cornerRadius(9).foregroundColor(Color.white)
                         
                     }
                     
@@ -68,18 +69,21 @@ struct AddToDoView: View {
                 Spacer()
                 
             }
-        
-       
-        .navigationBarTitle("New ToDo", displayMode: .inline)
-        .navigationBarItems(trailing: Button(action:{
-            self.presentationMode.wrappedValue.dismiss()
-        }){
-            Image(systemName: "xmark")
-        })
+            
+            
+            .navigationBarTitle("New ToDo", displayMode: .inline)
+            .navigationBarItems(trailing: Button(action:{
+                self.presentationMode.wrappedValue.dismiss()
+            }){
+                Image(systemName: "xmark")
+            })
             .alert(isPresented: $errorShowing) {
                 Alert(title: Text(errorTitle), message: Text(errorMessage),dismissButton: .default(Text("OK")))
             }
-        }}
+        }
+        .accentColor(themes[self.theme.themeSettings].themeColor)
+        .navigationViewStyle(StackNavigationViewStyle())
+    }
 }
 
 struct AddToDoView_Previews: PreviewProvider {

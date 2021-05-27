@@ -14,99 +14,134 @@ struct ContentView: View {
     
     @State private var showAddToDoView: Bool = false
     @State private var animatingButton: Bool = false
-    //@FetchRequest(entity: ToDo.entity(),sortDescriptors:[NSSortDescriptor(keyPath: \ToDo.name, ascending: true)])
-
+    @State private var showingSettingView: Bool = false
+    @ObservedObject var theme = ThemeSettings()
+    var themes: [Theme] = themeData
+    
     @FetchRequest(entity: ToDo.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \ToDo.name, ascending: true)]) var todos: FetchedResults<ToDo>
     
-    
     var body: some View {
-        
-        NavigationView{
+        NavigationView {
             ZStack {
-                List{
-                    ForEach(self.todos, id: \.self){ todo in
-                        HStack{
+                List {
+                    ForEach(self.todos, id: \.self) { todo in
+                        HStack {
+                            Circle()
+                                .frame(width: 12, height: 12, alignment: .center)
+                                .foregroundColor(self.colorize(priority: todo.priority ?? "Normal"))
                             Text(todo.name ?? "Unknown")
+                                .fontWeight(.semibold)
+                            
                             Spacer()
-                            Text(todo.priority ?? "Unknown ")
+                            
+                            Text(todo.priority ?? "Unkown")
+                                .font(.footnote)
+                                .foregroundColor(Color(UIColor.systemGray2))
+                                .padding(3)
+                                .frame(minWidth: 62)
+                                .overlay(
+                                    Capsule().stroke(Color(UIColor.systemGray2), lineWidth: 0.75)
+                                )
                         }
-                    }
-                    .onDelete(perform: deleteToDo)
+                        .padding(.vertical, 10)
+                    } //: FOREACH
+                    .onDelete(perform: deleteTodo)
                 }
-               
-                .navigationBarTitle("ToDo", displayMode: .inline)
-                .navigationBarItems(leading: EditButton(),
+                .navigationBarTitle("Todo", displayMode: .inline)
+                .navigationBarItems(
+                    leading: EditButton().accentColor(themes[self.theme.themeSettings].themeColor),
                     trailing:
-                                        Button(action:{
-                                            self.showAddToDoView.toggle()
-                                        }){
-                                            Image(systemName: "plus")
-                                        }
-                    .sheet(isPresented: $showAddToDoView){
-                        AddToDoView().environment(\.managedObjectContext, self.managedObjectContext)
-                    }
-            )
-                if todos.count == 0{
-                  EmptyListView()
+                        Button(action: {
+                            self.showingSettingView.toggle()
+                        }) {
+                            Image(systemName: "paintbrush")
+                                .imageScale(.large)
+                        }
+                        .accentColor(themes[self.theme.themeSettings].themeColor)
+                        .sheet(isPresented: $showingSettingView) {
+                            SettingsView()
+                        }
+                )
+                
+                
+                if todos.count == 0 {
+                    EmptyListView()
                 }
-            } .sheet(isPresented: $showAddToDoView){
+            }
+            .sheet(isPresented: $showAddToDoView) {
                 AddToDoView().environment(\.managedObjectContext, self.managedObjectContext)
             }
             .overlay(
                 ZStack {
-                    
-                    Group{
-                        Circle().fill(Color.blue).opacity(self.animatingButton ? 0.2 : 0)
+                    Group {
+                        Circle()
+                            .fill(themes[self.theme.themeSettings].themeColor)
+                            .opacity(self.animatingButton ? 0.2 : 0)
                             .scaleEffect(self.animatingButton ? 1 : 0)
                             .frame(width: 68, height: 68, alignment: .center)
-                        
-                        Circle().fill(Color.blue).opacity(self.animatingButton ? 0.15 : 0).scaleEffect(self.animatingButton ? 1 : 0).frame(width: 88, height: 88, alignment: .center)
-                        
-                    }.animation(Animation.easeInOut(duration: 2).repeatForever(autoreverses: true))
+                        Circle()
+                            .fill(themes[self.theme.themeSettings].themeColor)
+                            .opacity(self.animatingButton ? 0.15 : 0)
+                            .scaleEffect(self.animatingButton ? 1 : 0)
+                            .frame(width: 88, height: 88, alignment: .center)
+                    }
+                    // .animation(.easeInOut(duration: 4).repeatForever(autoreverses: true))
                     
                     Button(action: {
                         self.showAddToDoView.toggle()
-                    }){
-                        Image(systemName: "plus.circle.fill").resizable().scaledToFit().background(Circle().fill(Color("ColorBase"))).frame(width: 48, height: 48, alignment: .center)
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .resizable()
+                            .scaledToFit()
+                            .background(Circle().fill(Color("ColorBase")))
+                            .frame(width: 48, height: 48, alignment: .center)
                     }
+                    .accentColor(themes[self.theme.themeSettings].themeColor)
                     .onAppear(perform: {
                         self.animatingButton.toggle()
                     })
-                    
-                   
-                    
-                }.padding(.bottom, 15)
+                }
+                .padding(.bottom, 15)
                 .padding(.trailing, 15)
                 , alignment: .bottomTrailing
             )
         }
-       
-            
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
-    private func deleteToDo(at offsets: IndexSet){
-        for index in offsets{
+    
+    
+    private func deleteTodo(at offsets: IndexSet) {
+        for index in offsets {
             let todo = todos[index]
             managedObjectContext.delete(todo)
             
-            do{
+            do {
                 try managedObjectContext.save()
-            
-            }
-            catch{
+            } catch {
                 print(error)
             }
         }
+    }
     
+    private func colorize(priority: String) -> Color {
+        switch priority {
+        case "High":
+            return .pink
+        case "Normal":
+            return .green
+        case "Low":
+            return .blue
+        default:
+            return .gray
+        }
     }
 }
 
 
-
-
 struct ContentView_Previews: PreviewProvider {
     
-     
+    
     static var previews: some View {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         return ContentView()
